@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `exam` /*!40100 DEFAULT CHARACTER SET utf8mb3 */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `exam`;
 -- MySQL dump 10.13  Distrib 8.0.34, for Win64 (x86_64)
 --
 -- Host: localhost    Database: exam
@@ -34,6 +36,16 @@ CREATE TABLE `likes` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `likes`
+--
+
+LOCK TABLES `likes` WRITE;
+/*!40000 ALTER TABLE `likes` DISABLE KEYS */;
+INSERT INTO `likes` VALUES (2,1),(2,2);
+/*!40000 ALTER TABLE `likes` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `thoughts`
 --
 
@@ -54,6 +66,16 @@ CREATE TABLE `thoughts` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `thoughts`
+--
+
+LOCK TABLES `thoughts` WRITE;
+/*!40000 ALTER TABLE `thoughts` DISABLE KEYS */;
+INSERT INTO `thoughts` VALUES (1,' gawedsfwefsdx','2023-10-14 15:35:58','2023-10-14 15:35:58',1,1),(2,' gfbdzbfrgfxegSdvxc','2023-10-14 15:36:32','2023-10-14 15:36:32',2,1);
+/*!40000 ALTER TABLE `thoughts` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `users`
 --
 
@@ -71,6 +93,16 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `users`
+--
+
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (1,'Sofia','Solis Loaiciga','sofis64@gmail.com','$2b$12$AKJ5gpX7WRitoQAmCBFEnObjU57qoakZqB1hzFpxndis.pBZN6dkO','2023-10-14 11:18:30','2023-10-14 11:18:30'),(2,'Pablo','Fallas','pafaflo18@gmail.com','$2b$12$UUgAykzObIaVhvNWt.qGgOEB23k.HXxy6PQrbufpLEXYvXuys46He','2023-10-14 15:36:26','2023-10-14 15:36:26');
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -81,4 +113,4 @@ CREATE TABLE `users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-10-14 15:38:47
+-- Dump completed on 2023-10-14 15:52:15
