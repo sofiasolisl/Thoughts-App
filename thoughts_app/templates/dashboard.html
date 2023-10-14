@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thoughts | Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-dark border-bottom border-body" data-bs-theme="dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Thoughts </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url_for('signup')}}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url_for('user_thoughts',user_id = session.get('id'))}}">My Thoughts</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url_for('logout')}}">Log Out</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav> 
+    <main class="col-10 container text-center">
+        <div class=" d-flex justify-content-end">
+            <a class="btn btn-info mt-4" href="{{url_for('logout')}}" role="button">Logout</a>
+        </div>
+
+            <h1 class="text-center mt-4 mb-4">Welcome {{user.fname}}!</h1>
+
+            <div class="m-3"> {% with messages = get_flashed_messages() %}     
+                {% if messages %}                            
+                    {% for message in messages %}            
+                        <p class="bg-danger text-light rounded m-1">{{message}}</p>                   
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            </div>
+        <form action="{{url_for('dashboard')}}" method="post">
+            <div class="d-flex justify-content-center mt-5 ms-4">
+                <textarea name="thought" class="form-control" rows="4" placeholder="Post a thought here"> </textarea>
+                <input class="btn btn-info mt-4 mb-4 ms-4 align-self-center" type="submit" value="Add Thought">
+            </div>
+        </form>
+
+        <hr class="border border-info border-2 opacity-50 mt-5">
+        <div class="container">
+            {%for thought in all_thoughts:%}
+            <div class="container d-flex justify-content-between">
+                <div>
+                    {%for user in all_users%}
+                        {%if user.id==thought.user_id_creator%}
+                            <a href="{{url_for('user_thoughts',user_id=user.id)}}" class='link-info link-offset-2 link-underline-opacity-100-hover'> {{user.fname}} says:</a>
+                        {%endif%}
+                    {%endfor%}
+                </div>
+                <div class="col-5">
+                    <p class="border border-info border-1 ">{{thought.thought}}</p>
+                    <div class="d-flex justify-content-between">
+                    <!-- Profe no logre hacer que el button de like cabmiara entre "Like" y "UnLike", este fue mi intento:-->
+                        {#{%set x=namespace(value="like")%}
+                        {% for user_liked_thought in all_user_liked_thoughts: %}
+                            {%if user_liked_thought.id == thought.id%}
+                                {%set x.value="unlike"}
+                            {%endif%}
+                        {%endfor%} #}
+                        <a href="{{url_for('like', thought_id=thought.id, value='like')}}" class="btn btn-info " role="button"> Like</a>
+                        <a href="{{url_for('like', thought_id=thought.id, value='unlike')}}" class="btn btn-info " role="button"> Unlike</a>
+
+                        <p>{{thought.likes}} likes</p>
+                    </div>
+                </div>
+                <div>
+                    {%if thought.user_id_creator == user.id%}
+                            <a href="{{url_for('delete',thought_id=thought.id)}}" class="link-info link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Delete</a>
+                    {%endif%}
+                </div>
+            </div>
+            <hr class="border border-info border-1 opacity-50 mt-5">
+            {%endfor%}
+        </div>
+    </main>
+</body>
+</html>
